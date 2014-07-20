@@ -65,8 +65,8 @@
             <ul class="nav">
                           <li class="divider-vertical"></li>
                   <li >
-                    <a href="/category/tech.html">
-						<i class="icon-folder-open icon-large"></i>Tech
+                    <a href="/category/ji-zhu.html">
+						<i class="icon-folder-open icon-large"></i>技术
 					</a>
                   </li>
 
@@ -85,7 +85,7 @@
       <div class="row">
         <div class="span9" id="content">
         <div class="article">
-                <h1><a href="/this-is-my-first-blog.html">This is My First Blog</a></h1>
+                <h1><a href="/hello-world.html">Hello World！</a></h1>
                 <div class="well small"><footer class="post-info">
 <span class="label">Date</span>
 <abbr class="published" title="2014-07-20T00:00:00">
@@ -94,18 +94,36 @@
 <span class="label">By</span>
 <a href="/author/lixiang.html"><i class="icon-user"></i>LiXiang</a>
 <span class="label">Category</span>
-<a href="/category/tech.html"><i class="icon-folder-open"></i>Tech</a>.
+<a href="/category/ji-zhu.html"><i class="icon-folder-open"></i>技术</a>.
 
 
 <span class="label">Tags</span>
 	<a href="/tag/python.html"><i class="icon-tag"></i>Python</a>
 	<a href="/tag/pelican.html"><i class="icon-tag"></i>Pelican</a>
 </footer><!-- /.post-info --></div>
-                <div class="summary"><blockquote>
-<p>http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html
-http://www.dongxf.com/3_Build_Personal_Blog_With_Pelican_And_GitHub_Pages.html</p>
+                <div class="summary"><hr />
+<p>这是我的第一篇博客，采用了Github+Pelican方案。主要参考了下文的方法。</p>
+<blockquote>
+<p><a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html">博客诞生记</a></p>
+<p><a href="http://www.dongxf.com/3_Build_Personal_Blog_With_Pelican_And_GitHub_Pages.html">用 Pelican 和 GitHub Pages 搭建免费的个人博客</a></p>
 </blockquote>
-                        <a class="btn primary xsmall" href="/this-is-my-first-blog.html">more ...</a>
+<h2>一些遇到的问题</h2>
+<p>接下来说一些自己遇到的问题</p>
+<h3>1.有关Python</h3>
+<p>Pelican是基于Python开发的，由于自己是第一次接触Python，遇到了一些比较傻的问题。例如，在配置Pelican时，要求创建Pelican虚拟环境。采用下列语句：</p>
+<div class="highlight"><pre><span class="n">virtualenv</span> <span class="n">PelicanEnv</span> <span class="o">--</span><span class="n">distribute</span>
+<span class="n">PelicanEnv</span><span class="err">\</span><span class="n">Scripts</span><span class="err">\</span><span class="n">activate</span>
+</pre></div>
+
+
+<p>我直接在Python的Shell里输入了上述命令，结果可想而知，发生了“invalid syntax”错误。后来经过查询，原来运行virtualenv、pip等命令时，应该利用CMD进入相对应的exe文件所在文件夹运行。运行结果如图</p>
+<p><img alt="" src="http://i.imgur.com/cwC3NwB.png" /></p>
+<h3>2. 有关编码</h3>
+<p>在运行pelican content时，发生了如下错误</p>
+<p><img alt="" src="http://i.imgur.com/BBgowwz.png" /></p>
+<p>google之，发现是博客的内容输入了中文，但文件的编码格式不对<a href="http://blog.sina.com.cn/s/blog_940224600101499e.html">1</a>。
+故利用notepad++将编码格式转为utf-8 ...</p>
+                        <a class="btn primary xsmall" href="/hello-world.html">more ...</a>
                 </div>
         </div>
         <hr />
@@ -126,20 +144,20 @@ http://www.dongxf.com/3_Build_Personal_Blog_With_Pelican_And_GitHub_Pages.html</
 
 <li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
 <li>
-<a href="/category/tech.html">
-    <i class="icon-folder-open icon-large"></i>Tech
+<a href="/category/ji-zhu.html">
+    <i class="icon-folder-open icon-large"></i>技术
 </a>
 </li>
 
 <li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
 <li class="tag-4">
-    <a href="/tag/python.html">
-        <i class="icon-tag icon-large"></i>Python
+    <a href="/tag/pelican.html">
+        <i class="icon-tag icon-large"></i>Pelican
     </a>
 </li>
 <li class="tag-4">
-    <a href="/tag/pelican.html">
-        <i class="icon-tag icon-large"></i>Pelican
+    <a href="/tag/python.html">
+        <i class="icon-tag icon-large"></i>Python
     </a>
 </li>
 
