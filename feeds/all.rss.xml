@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LiXiang_BIT's Blog</title><link>http://lxalxy.github.io/</link><description></description><atom:link href="http://lxalxy.github.io/feeds%5Clixiang.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 20 Jul 2014 00:00:00 +0800</lastBuildDate><item><title>Hello World！</title><link>http://lxalxy.github.io/hello-world.html</link><description>&lt;hr /&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LiXiang_BIT's Blog</title><link>http://lxalxy.github.io/</link><description></description><atom:link href="http://lxalxy.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 20 Jul 2014 00:00:00 +0800</lastBuildDate><item><title>Hello World！</title><link>http://lxalxy.github.io/hello-world.html</link><description>&lt;hr /&gt;
 &lt;p&gt;这是我的第一篇博客，采用了Github+Pelican方案。主要参考了下文的方法。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html"&gt;博客诞生记：基于GitHub+Pelican创建博客的整个过程&lt;/a&gt;&lt;/p&gt;

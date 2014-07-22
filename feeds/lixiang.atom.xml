@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>LiXiang_BIT's Blog</title><link href="/" rel="alternate"></link><link href="/feeds%5Clixiang.atom.xml" rel="self"></link><id>/</id><updated>2014-07-20T00:00:00+08:00</updated><entry><title>Hello World！</title><link href="/hello-world.html" rel="alternate"></link><updated>2014-07-20T00:00:00+08:00</updated><author><name>LiXiang</name></author><id>tag:,2014-07-20:hello-world.html</id><summary type="html">&lt;hr /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>LiXiang_BIT's Blog</title><link href="http://lxalxy.github.io/" rel="alternate"></link><link href="http://lxalxy.github.io/feeds%5Clixiang.atom.xml" rel="self"></link><id>http://lxalxy.github.io/</id><updated>2014-07-20T00:00:00+08:00</updated><entry><title>Hello World！</title><link href="http://lxalxy.github.io/hello-world.html" rel="alternate"></link><updated>2014-07-20T00:00:00+08:00</updated><author><name>LiXiang</name></author><id>tag:lxalxy.github.io,2014-07-20:hello-world.html</id><summary type="html">&lt;hr /&gt;
 &lt;p&gt;这是我的第一篇博客，采用了Github+Pelican方案。主要参考了下文的方法。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html"&gt;博客诞生记&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html"&gt;博客诞生记：基于GitHub+Pelican创建博客的整个过程&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.dongxf.com/3_Build_Personal_Blog_With_Pelican_And_GitHub_Pages.html"&gt;用 Pelican 和 GitHub Pages 搭建免费的个人博客&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2&gt;一些遇到的问题&lt;/h2&gt;
@@ -15,9 +15,9 @@
 
 
 &lt;p&gt;我直接在Python的Shell里输入了上述命令，结果可想而知，发生了“invalid syntax”错误。后来经过查询，原来运行virtualenv、pip等命令时，应该利用CMD进入相对应的exe文件所在文件夹运行。运行结果如图&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://i.imgur.com/cwC3NwB.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pic1" src="http://i.imgur.com/cwC3NwB.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;2. 有关编码&lt;/h3&gt;
 &lt;p&gt;在运行pelican content时，发生了如下错误&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://i.imgur.com/BBgowwz.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pic2" src="http://i.imgur.com/BBgowwz.png" /&gt;&lt;/p&gt;
 &lt;p&gt;google之，发现是博客的内容输入了中文，但文件的编码格式不对&lt;a href="http://blog.sina.com.cn/s/blog_940224600101499e.html"&gt;1&lt;/a&gt;。
 故利用notepad++将编码格式转为utf-8，保存即可。&lt;/p&gt;</summary><category term="Python"></category><category term="Pelican"></category></entry></feed>
