@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>KMP算法初接触</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="LiXiang">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="http://lxalxy.github.io/theme/css/bootstrap.min.css" type="text/css" />
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .tag-1 {
+        font-size: 13pt;
+      }
+      .tag-2 {
+        font-size: 10pt;
+      }
+      .tag-2 {
+        font-size: 8pt;
+      }
+      .tag-4 {
+        font-size: 6pt;
+     }
+    </style>
+    <link href="http://lxalxy.github.io/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="http://lxalxy.github.io/theme/css/font-awesome.css" rel="stylesheet">
+
+    <link href="http://lxalxy.github.io/theme/css/pygments.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="http://lxalxy.github.io/theme/images/favicon.ico">
+    <link rel="apple-touch-icon" href="http://lxalxy.github.io/theme/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="http://lxalxy.github.io/theme/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="http://lxalxy.github.io/theme/images/apple-touch-icon-114x114.png">
+
+    <link href="http://lxalxy.github.io/" type="application/atom+xml" rel="alternate" title="LiXiang_BIT's Blog ATOM Feed" />
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="http://lxalxy.github.io/index.html">LiXiang_BIT's Blog </a>
+          <div class="nav-collapse">
+            <ul class="nav">
+                <li><a href="http://lxalxy.github.io/pages/guan-yu-wo.html">关于我</a></li>
+                          <li class="divider-vertical"></li>
+                  <li class="active">
+                    <a href="http://lxalxy.github.io/category/coding.html">
+						<i class="icon-folder-open icon-large"></i>Coding
+					</a>
+                  </li>
+                  <li >
+                    <a href="http://lxalxy.github.io/category/ji-zhu.html">
+						<i class="icon-folder-open icon-large"></i>技术
+					</a>
+                  </li>
+
+                          <ul class="nav pull-right">
+                                <li><a href="http://lxalxy.github.io/archives.html"><i class="icon-th-list"></i>Archives</a></li>
+                          </ul>
+
+            </ul>
+            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span9" id="content">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to KMP算法初接触">
+                                        KMP算法初接触
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2014-07-25T00:00:00">
+        <i class="icon-calendar"></i>周五 25 七月 2014
+</abbr>
+<span class="label">By</span>
+<a href="http://lxalxy.github.io/author/lixiang.html"><i class="icon-user"></i>LiXiang</a>
+<span class="label">Category</span>
+<a href="http://lxalxy.github.io/category/coding.html"><i class="icon-folder-open"></i>Coding</a>.
+
+
+<span class="label">Tags</span>
+	<a href="http://lxalxy.github.io/tag/cc.html"><i class="icon-tag"></i>C\C++</a>
+	<a href="http://lxalxy.github.io/tag/suan-fa.html"><i class="icon-tag"></i>算法</a>
+</footer><!-- /.post-info -->                </div>
+                <hr />
+<p>偶然发现了hihoCoder上提供了一个“hiho一下”的编程联系，感觉相对系统且比较基础，适合我这种啥都不会的-_-|||</p>
+<blockquote>
+<p><a href="http://hihocoder.com/hiho">hiho一下</a></p>
+</blockquote>
+<p>发现的比较晚，已经到了第三周的题目。第三周是学习KMP算法。这是一个非常经典的字符串匹配算法。所谓字符串匹配，就是判断一串字符（原串）中是否存在一个特定的字符串（模式串）。最开始，参考了下述两篇文章，编写了算法。</p>
+<blockquote>
+<p><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html">字符串匹配的KMP算法</a></p>
+<p><a href="http://blog.csdn.net/v_july_v/article/details/7041827">从头到尾彻底理解KMP（2014年7月版）</a></p>
+</blockquote>
+<p>具体原理就先不写了，有时间再撸吧。</p>
+<p>这是我的第一版程序</p>
+<div class="highlight"><pre><span class="vi">#include</span> <span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="vi">#include</span> <span class="s2">&quot;iostream&quot;</span>
+
+<span class="nx">using</span> <span class="nx">namespace</span> <span class="nx">std</span><span class="p">;</span>
+
+<span class="nx">int</span> <span class="n">theNumofPattern</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="bp">void</span> <span class="nx">nextCal</span><span class="p">(</span><span class="kt">string</span> <span class="nb">s</span><span class="p">,</span> <span class="nx">int</span> <span class="nb">next</span><span class="err">[</span><span class="cp">]</span>);
+int kmpCal(string s, string t);
+
+int main( )
+{
+    int theNumofTest = 0;
+    string s;
+    string t;
+    cin &gt;&gt; theNumofTest;
+    while (theNumofTest--)
+    {
+        cin &gt;&gt; t;
+        cin &gt;&gt; s;
+        int sLength = s.length();
+        int tLength = t.length();
+        int theLocation = 0;
+
+        while (theLocation <span class="nt">&lt; sLength</span><span class="err">)</span>
+        <span class="err">{</span>
+            <span class="na">if</span> <span class="err">(</span><span class="na">theLocation</span> <span class="err">!=</span> <span class="na">0</span><span class="err">)</span>
+            <span class="err">{</span>
+                <span class="na">s =</span><span class="err"> </span><span class="s">s.substr(theLocation</span> <span class="na">-</span> <span class="na">tLength</span> <span class="err">+</span> <span class="na">1</span><span class="err">,</span> <span class="na">sLength</span><span class="err">);</span>
+            <span class="err">}</span>
+            <span class="na">theLocation =</span><span class="err"> </span><span class="s">kmpCal(s,</span> <span class="na">t</span><span class="err">);</span>
+            <span class="na">if</span> <span class="err">(</span><span class="na">theLocation =</span><span class="s">=</span> <span class="na">s</span><span class="err">.</span><span class="na">length</span><span class="err">())</span>
+                <span class="na">break</span><span class="err">;</span>
+        <span class="err">}</span>
+        <span class="na">cout</span> <span class="err">&lt;&lt;</span> <span class="na">theNumofPattern</span> <span class="err">&lt;&lt;</span> <span class="na">endl</span><span class="err">;</span>
+        <span class="na">theNumofPattern =</span><span class="err"> </span><span class="s">0;</span>
+    <span class="err">}</span>
+
+    <span class="na">return</span> <span class="na">0</span><span class="err">;</span>
+<span class="err">}</span>
+
+
+<span class="na">int</span> <span class="na">kmpCal</span><span class="err">(</span><span class="na">string</span> <span class="na">s</span><span class="err">,</span> <span class="na">string</span> <span class="na">t</span><span class="err">)</span>
+<span class="err">{</span>
+    <span class="na">int</span> <span class="na">sLength =</span><span class="err"> </span><span class="s">s.length();</span>
+    <span class="na">int</span> <span class="na">tLength =</span><span class="err"> </span><span class="s">t.length();</span>
+    <span class="na">int</span> <span class="na">next</span><span class="cp">[</span><span class="mi">10001</span><span class="cp">]</span><span class="err">;</span>
+    <span class="na">nextCal</span><span class="err">(</span><span class="na">t</span><span class="err">,</span> <span class="na">next</span><span class="err">);</span>
+    <span class="na">int</span> <span class="na">i =</span><span class="err"> </span><span class="s">0;</span>
+    <span class="na">int</span> <span class="na">j =</span><span class="err"> </span><span class="s">0;</span>
+    <span class="na">while</span> <span class="err">((</span><span class="na">i</span> <span class="err">&lt;</span> <span class="na">sLength</span><span class="err">)</span> <span class="err">&amp;&amp;</span> <span class="err">(</span><span class="na">j</span> <span class="err">&lt;</span> <span class="na">tLength</span><span class="err">))</span>
+    <span class="err">{</span>
+        <span class="na">if</span> <span class="err">(</span><span class="na">s</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span> <span class="err">!=</span> <span class="na">t</span><span class="cp">[</span><span class="nx">j</span><span class="cp">]</span><span class="err">)</span>
+        <span class="err">{</span>
+            <span class="na">i =</span><span class="err"> </span><span class="s">i</span> <span class="na">-</span> <span class="na">next</span><span class="cp">[</span><span class="nx">j</span><span class="cp">]</span><span class="err">;</span>
+            <span class="na">j =</span><span class="err"> </span><span class="s">0;</span>
+        <span class="err">}</span>
+        <span class="na">else</span>
+        <span class="err">{</span>
+            <span class="na">i</span><span class="err">++;</span>
+            <span class="na">j</span><span class="err">++;</span>
+        <span class="err">}</span>
+    <span class="err">}</span>
+    <span class="na">if</span> <span class="err">(</span><span class="na">j =</span><span class="s">=</span> <span class="na">tLength</span><span class="err">)</span>
+    <span class="err">{</span>
+    <span class="err">//</span>  <span class="na">printf</span><span class="err">(&quot;%</span><span class="na">d</span><span class="err">\</span><span class="na">n</span><span class="err">&quot;,</span> <span class="na">i-1</span><span class="err">);</span>
+        <span class="na">theNumofPattern</span><span class="err">++;</span>
+    <span class="err">}</span>
+    <span class="na">else</span>
+    <span class="err">{</span>
+    <span class="err">//</span>  <span class="na">printf</span><span class="err">(&quot;%</span><span class="na">s</span><span class="err">\</span><span class="na">n</span><span class="err">&quot;,</span> <span class="err">&quot;</span><span class="na">none</span><span class="err">&quot;);</span> 
+    <span class="err">}</span>
+    <span class="na">return</span> <span class="na">i</span><span class="err">;</span>
+<span class="err">}</span>
+
+<span class="na">void</span> <span class="na">nextCal</span><span class="err">(</span><span class="na">string</span> <span class="na">s</span><span class="err">,</span> <span class="na">int</span> <span class="na">next</span><span class="cp">[]</span><span class="err">)</span>
+<span class="err">{</span>
+    <span class="na">int</span> <span class="na">len =</span><span class="err"> </span><span class="s">s.length();</span>
+    <span class="na">next</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">0;</span>
+    <span class="na">for</span> <span class="err">(</span><span class="na">int</span> <span class="na">i =</span><span class="err"> </span><span class="s">1;</span> <span class="na">i</span> <span class="err">&lt;</span> <span class="na">len</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span>
+    <span class="err">{</span>
+        <span class="na">int</span> <span class="na">k =</span><span class="err"> </span><span class="s">next</span><span class="cp">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span><span class="s">;</span>
+        <span class="na">while</span> <span class="err">(</span><span class="na">s</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span> <span class="err">!=</span> <span class="na">s</span><span class="cp">[</span><span class="nx">k</span><span class="cp">]</span> <span class="err">&amp;&amp;</span> <span class="na">k</span> <span class="err">!=</span> <span class="na">0</span><span class="err">)</span>
+            <span class="na">k =</span><span class="err"> </span><span class="s">next</span><span class="cp">[</span><span class="nx">k</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span><span class="s">;</span>
+        <span class="na">if</span> <span class="err">(</span><span class="na">s</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span><span class="na"> =</span><span class="s">=</span> <span class="na">s</span><span class="cp">[</span><span class="nx">k</span><span class="cp">]</span><span class="err">)</span>
+            <span class="na">next</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">k</span> <span class="err">+</span> <span class="na">1</span><span class="err">;</span>
+        <span class="na">else</span>
+            <span class="na">next</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">0;</span> 
+    <span class="err">}</span>
+    <span class="na">for</span> <span class="err">(</span><span class="na">int</span> <span class="na">i =</span><span class="err"> </span><span class="s">0;</span> <span class="na">i</span> <span class="err">&lt;</span> <span class="na">len</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span>
+    <span class="err">{</span>
+        <span class="na">next</span><span class="cp">[</span><span class="nx">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="nx">i</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">next</span><span class="cp">[</span><span class="nx">len</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">-</span> <span class="nx">i</span><span class="cp">]</span><span class="s">;</span>
+    <span class="err">}</span>
+    <span class="na">next</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">-1;</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>在电脑上测试样例通过，于是马上提交代码，结果却Time Limit Exceeded。</p>
+<p>看来自己编写的确实算法复杂度太差了。回头看了看，循环太多，但是却又无从下手修改。</p>
+<p>后来经大神<a href="http://xmfbit.github.io/">xmfbit</a>指点，参考下面这篇博客重新编写了程序。</p>
+<blockquote>
+<p><a href="http://www.matrix67.com/blog/archives/115">KMP算法详解</a></p>
+</blockquote>
+<p>第二版程序如下：</p>
+<div class="highlight"><pre><span class="vi">#include</span> <span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="vi">#include</span> <span class="s2">&quot;iostream&quot;</span>
+
+<span class="nx">using</span> <span class="nx">namespace</span> <span class="nx">std</span><span class="p">;</span>
+
+<span class="nx">int</span> <span class="n">theNumofPattern</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="bp">void</span> <span class="nx">nextCal</span><span class="p">(</span><span class="kt">string</span> <span class="nb">s</span><span class="p">,</span> <span class="nx">int</span> <span class="o">*</span><span class="nb">next</span><span class="p">);</span>
+<span class="bp">void</span> <span class="nx">kmpCal</span><span class="p">(</span><span class="kt">string</span> <span class="nb">s</span><span class="p">,</span> <span class="kt">string</span> <span class="nb">t</span><span class="p">,</span> <span class="nx">int</span> <span class="nb">next</span><span class="err">[</span><span class="cp">]</span>);
+
+int main( )
+{
+    int theNumofTest = 0;
+    string s;
+    string t;
+    int next<span class="cp">[</span><span class="mi">10001</span><span class="cp">]</span>;
+    cin &gt;&gt; theNumofTest;
+    while (theNumofTest--)
+    {
+        cin &gt;&gt; t;
+        cin &gt;&gt; s;
+        nextCal(t, next);
+        kmpCal(s, t, next);
+    }
+
+    return 0;
+}
+
+void nextCal(string s, int *next)
+{
+    next<span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> = 0;
+    int j = 0;
+    int sLength = s.length();
+    for (int i = 1; i <span class="nt">&lt; sLength</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span>
+    <span class="err">{</span>
+        <span class="na">while</span> <span class="err">((</span><span class="na">j</span> <span class="nt">&gt;</span> 0) <span class="err">&amp;&amp;</span> (s<span class="cp">[</span><span class="nx">j</span><span class="cp">]</span> != s<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span>))
+            j = next<span class="cp">[</span><span class="nx">j</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span>;
+        if (s<span class="cp">[</span><span class="nx">j</span><span class="cp">]</span> == s<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span>)
+        {
+            j = j + 1;
+        }
+        next<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span> = j;
+    }
+}
+
+void kmpCal(string s, string t, int next<span class="cp">[]</span>)
+{
+    int i = 0;
+    int j = 0;
+    int sLength = s.length();
+    int tLength = t.length();
+    for (i = 0; i <span class="nt">&lt; sLength</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span>
+    <span class="err">{</span>
+        <span class="na">while</span> <span class="err">((</span><span class="na">j</span> <span class="nt">&gt;</span> 0) <span class="err">&amp;&amp;</span> (t<span class="cp">[</span><span class="nx">j</span><span class="cp">]</span> != s<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span>))
+            j = next<span class="cp">[</span><span class="nx">j</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span>;
+        if (t<span class="cp">[</span><span class="nx">j</span><span class="cp">]</span> == s<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span>)
+            j = j + 1;
+        if (j == tLength)
+        {
+            theNumofPattern++;
+            //cout <span class="err">&lt;</span><span class="nt">&lt; i</span> <span class="na">-</span> <span class="na">tLength</span> <span class="err">&lt;&lt;</span> <span class="na">endl</span><span class="err">;</span>
+            <span class="na">j =</span><span class="err"> </span><span class="s">next</span><span class="cp">[</span><span class="nx">j</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span><span class="s">;</span>
+        <span class="err">}</span>
+    <span class="err">}</span>
+    <span class="na">cout</span> <span class="err">&lt;&lt;</span> <span class="na">theNumofPattern</span> <span class="err">&lt;&lt;</span> <span class="na">endl</span><span class="err">;</span>
+    <span class="na">theNumofPattern =</span><span class="err"> </span><span class="s">0;</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>程序简短了许多，测试成功后，提交代码。</p>
+<p>AC了~</p>
+<p>耗时241ms，果然要比自己瞎编的要强得多啊。</p>
+                </div><!-- /.entry-content -->
+                <div class="comments">
+                <h2>Comments !</h2>
+                        <div id="disqus_thread"></div>
+                        <script type="text/javascript">
+                           var disqus_identifier = "kmpsuan-fa-chu-jie-hong.html";
+                           (function() {
+                                var dsq = document.createElement('script');
+                                dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = 'http://lxbit.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] ||
+                                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                        </script>
+                </div>
+        </article>
+</section>
+        </div><!--/span-->
+
+                <div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-external-link"></i>blogroll</h4></li>
+    <li><a href="http://www.bit.edu.cn/"><i class="icon-external-link"></i>北京理工大学</a></li>
+    <li><a href="http://ac.bit.edu.cn/"><i class="icon-external-link"></i>北京理工大学自动化学院</a></li>
+    <li><a href="http://inin.bit.edu.cn/"><i class="icon-external-link"></i>北京理工大学组合导航与智能导航实验室</a></li>
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+<li><a href="http://lxalxy.github.io/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><a href="http://weibo.com/500120411"><i class="icon-新浪微博-sign icon-large"></i>新浪微博</a></li>
+    <li><a href="http://www.renren.com/302880155"><i class="icon-人人网-sign icon-large"></i>人人网</a></li>
+    <li><a href="mailto:lxaljx@163.com"><i class="icon-电子邮件-sign icon-large"></i>电子邮件</a></li>
+
+<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="http://lxalxy.github.io/category/coding.html">
+    <i class="icon-folder-open icon-large"></i>Coding
+</a>
+</li>
+<li>
+<a href="http://lxalxy.github.io/category/ji-zhu.html">
+    <i class="icon-folder-open icon-large"></i>技术
+</a>
+</li>
+
+<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<li class="tag-4">
+    <a href="http://lxalxy.github.io/tag/suan-fa.html">
+        <i class="icon-tag icon-large"></i>算法
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://lxalxy.github.io/tag/pelican.html">
+        <i class="icon-tag icon-large"></i>Pelican
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://lxalxy.github.io/tag/cc.html">
+        <i class="icon-tag icon-large"></i>C\C++
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://lxalxy.github.io/tag/python.html">
+        <i class="icon-tag icon-large"></i>Python
+    </a>
+</li>
+
+
+</ul>        </div><!--/.well -->
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <address id="about">
+                Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican <i class="icon-external-link"></i></a>,
+                                which takes great advantage of <a href="http://python.org">Python <i class="icon-external-link"></i></a>.
+        </address><!-- /#about -->
+
+        <p>The theme is from <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter <i class="icon-external-link"></i></a>,
+                   and <a href="http://fortawesome.github.com/Font-Awesome/">Font-Awesome <i class="icon-external-link"></i></a>, thanks!</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+	var pageTracker = _gat._getTracker("UA-53067553-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<script type="text/javascript">
+    var disqus_shortname = 'lxbit';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+
+    <!-- Le javascript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://lxalxy.github.io/theme/js/jquery-1.7.2.min.js"></script>
+    <script src="http://lxalxy.github.io/theme/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,5 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LiXiang_BIT's Blog</title><link>http://lxalxy.github.io/</link><description></description><atom:link href="http://lxalxy.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 20 Jul 2014 00:00:00 +0800</lastBuildDate><item><title>Hello World！</title><link>http://lxalxy.github.io/hello-world.html</link><description>&lt;hr /&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LiXiang_BIT's Blog</title><link>http://lxalxy.github.io/</link><description></description><atom:link href="http://lxalxy.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 25 Jul 2014 00:00:00 +0800</lastBuildDate><item><title>KMP算法初接触</title><link>http://lxalxy.github.io/kmpsuan-fa-chu-jie-hong.html</link><description>&lt;hr /&gt;
+&lt;p&gt;偶然发现了hihoCoder上提供了一个“hiho一下”的编程联系，感觉相对系统且比较基础，适合我这种啥都不会的-_-|||&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="http://hihocoder.com/hiho"&gt;hiho一下&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;发现的比较晚，已经到了第三周的题目。第三周是学习KMP算法。这是一个非常经典的字符串匹配算法。所谓字符串匹配，就是判断一串字符（原串）中是否存在一个特定的字符串（模式串）。最开始，参考了下述两篇文章，编写了算法。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html"&gt;字符串匹配的KMP算法&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/v_july_v/article/details/7041827"&gt;从头到尾彻底理解KMP（2014年7月版）&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;具体原理就先不写了，有时间再撸吧。&lt;/p&gt;
+&lt;p&gt;这是我的第一版程序&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="vi"&gt;#include&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="vi"&gt;#include&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;iostream&amp;quot;&lt;/span&gt;
+
+&lt;span class="nx"&gt;using&lt;/span&gt; &lt;span class="nx"&gt;namespace&lt;/span&gt; &lt;span class="nx"&gt;std&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="n"&gt;theNumofPattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="bp"&gt;void&lt;/span&gt; &lt;span class="nx"&gt;nextCal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="nb"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;);
+int kmpCal(string s, string t);
+
+int main( )
+{
+    int theNumofTest = 0;
+    string s;
+    string t;
+    cin &amp;gt;&amp;gt; theNumofTest;
+    while (theNumofTest--)
+    {
+        cin &amp;gt;&amp;gt; t;
+        cin &amp;gt;&amp;gt; s;
+        int sLength = s.length();
+        int tLength = t.length();
+        int theLocation = 0;
+
+        while (theLocation &lt;span class="nt"&gt;&amp;lt; sLength&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt;
+        &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="na"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;theLocation&lt;/span&gt; &lt;span class="err"&gt;!=&lt;/span&gt; &lt;span class="na"&gt;0&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt;
+            &lt;span class="err"&gt;{&lt;/span&gt;
+                &lt;span class="na"&gt;s =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;s.substr(theLocation&lt;/span&gt; &lt;span class="na"&gt;-&lt;/span&gt; &lt;span class="na"&gt;tLength&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="na"&gt;1&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt; &lt;span class="na"&gt;sLength&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+            &lt;span class="err"&gt;}&lt;/span&gt;
+            &lt;span class="na"&gt;theLocation =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;kmpCal(s,&lt;/span&gt; &lt;span class="na"&gt;t&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+            &lt;span class="na"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;theLocation =&lt;/span&gt;&lt;span class="s"&gt;=&lt;/span&gt; &lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="err"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="err"&gt;())&lt;/span&gt;
+                &lt;span class="na"&gt;break&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;}&lt;/span&gt;
+        &lt;span class="na"&gt;cout&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;theNumofPattern&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;endl&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+        &lt;span class="na"&gt;theNumofPattern =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;0;&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
+
+    &lt;span class="na"&gt;return&lt;/span&gt; &lt;span class="na"&gt;0&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+
+
+&lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;kmpCal&lt;/span&gt;&lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;string&lt;/span&gt; &lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt; &lt;span class="na"&gt;string&lt;/span&gt; &lt;span class="na"&gt;t&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt;
+&lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;sLength =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;s.length();&lt;/span&gt;
+    &lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;tLength =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;t.length();&lt;/span&gt;
+    &lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10001&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+    &lt;span class="na"&gt;nextCal&lt;/span&gt;&lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;t&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt; &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+    &lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;i =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;0;&lt;/span&gt;
+    &lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;j =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;0;&lt;/span&gt;
+    &lt;span class="na"&gt;while&lt;/span&gt; &lt;span class="err"&gt;((&lt;/span&gt;&lt;span class="na"&gt;i&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;sLength&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt; &lt;span class="err"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;j&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;tLength&lt;/span&gt;&lt;span class="err"&gt;))&lt;/span&gt;
+    &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; &lt;span class="err"&gt;!=&lt;/span&gt; &lt;span class="na"&gt;t&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt;
+        &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="na"&gt;i =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;i&lt;/span&gt; &lt;span class="na"&gt;-&lt;/span&gt; &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+            &lt;span class="na"&gt;j =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;0;&lt;/span&gt;
+        &lt;span class="err"&gt;}&lt;/span&gt;
+        &lt;span class="na"&gt;else&lt;/span&gt;
+        &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="na"&gt;i&lt;/span&gt;&lt;span class="err"&gt;++;&lt;/span&gt;
+            &lt;span class="na"&gt;j&lt;/span&gt;&lt;span class="err"&gt;++;&lt;/span&gt;
+        &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="na"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;j =&lt;/span&gt;&lt;span class="s"&gt;=&lt;/span&gt; &lt;span class="na"&gt;tLength&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt;
+    &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;//&lt;/span&gt;  &lt;span class="na"&gt;printf&lt;/span&gt;&lt;span class="err"&gt;(&amp;quot;%&lt;/span&gt;&lt;span class="na"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="na"&gt;n&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;,&lt;/span&gt; &lt;span class="na"&gt;i-1&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+        &lt;span class="na"&gt;theNumofPattern&lt;/span&gt;&lt;span class="err"&gt;++;&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="na"&gt;else&lt;/span&gt;
+    &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;//&lt;/span&gt;  &lt;span class="na"&gt;printf&lt;/span&gt;&lt;span class="err"&gt;(&amp;quot;%&lt;/span&gt;&lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="na"&gt;n&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;,&lt;/span&gt; &lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="na"&gt;none&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;);&lt;/span&gt; 
+    &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="na"&gt;return&lt;/span&gt; &lt;span class="na"&gt;i&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+
+&lt;span class="na"&gt;void&lt;/span&gt; &lt;span class="na"&gt;nextCal&lt;/span&gt;&lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;string&lt;/span&gt; &lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt; &lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[]&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt;
+&lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;len =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;s.length();&lt;/span&gt;
+    &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="na"&gt; =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;0;&lt;/span&gt;
+    &lt;span class="na"&gt;for&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;i =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;1;&lt;/span&gt; &lt;span class="na"&gt;i&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;len&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt; &lt;span class="na"&gt;i&lt;/span&gt;&lt;span class="err"&gt;++)&lt;/span&gt;
+    &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;k =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s"&gt;;&lt;/span&gt;
+        &lt;span class="na"&gt;while&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; &lt;span class="err"&gt;!=&lt;/span&gt; &lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; &lt;span class="err"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="na"&gt;k&lt;/span&gt; &lt;span class="err"&gt;!=&lt;/span&gt; &lt;span class="na"&gt;0&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt;
+            &lt;span class="na"&gt;k =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s"&gt;;&lt;/span&gt;
+        &lt;span class="na"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="na"&gt; =&lt;/span&gt;&lt;span class="s"&gt;=&lt;/span&gt; &lt;span class="na"&gt;s&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt;
+            &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="na"&gt; =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;k&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="na"&gt;1&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+        &lt;span class="na"&gt;else&lt;/span&gt;
+            &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="na"&gt; =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;0;&lt;/span&gt; 
+    &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="na"&gt;for&lt;/span&gt; &lt;span class="err"&gt;(&lt;/span&gt;&lt;span class="na"&gt;int&lt;/span&gt; &lt;span class="na"&gt;i =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;0;&lt;/span&gt; &lt;span class="na"&gt;i&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;len&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt; &lt;span class="na"&gt;i&lt;/span&gt;&lt;span class="err"&gt;++)&lt;/span&gt;
+    &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;len&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="na"&gt; =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;len&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="na"&gt; =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;-1;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在电脑上测试样例通过，于是马上提交代码，结果却Time Limit Exceeded。&lt;/p&gt;
+&lt;p&gt;看来自己编写的确实算法复杂度太差了。回头看了看，循环太多，但是却又无从下手修改。&lt;/p&gt;
+&lt;p&gt;后来经大神&lt;a href="http://xmfbit.github.io/"&gt;xmfbit&lt;/a&gt;指点，参考下面这篇博客重新编写了程序。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="http://www.matrix67.com/blog/archives/115"&gt;KMP算法详解&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;第二版程序如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="vi"&gt;#include&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="vi"&gt;#include&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;iostream&amp;quot;&lt;/span&gt;
+
+&lt;span class="nx"&gt;using&lt;/span&gt; &lt;span class="nx"&gt;namespace&lt;/span&gt; &lt;span class="nx"&gt;std&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="n"&gt;theNumofPattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="bp"&gt;void&lt;/span&gt; &lt;span class="nx"&gt;nextCal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="nb"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="bp"&gt;void&lt;/span&gt; &lt;span class="nx"&gt;kmpCal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="nb"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="nb"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;);
+
+int main( )
+{
+    int theNumofTest = 0;
+    string s;
+    string t;
+    int next&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10001&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;;
+    cin &amp;gt;&amp;gt; theNumofTest;
+    while (theNumofTest--)
+    {
+        cin &amp;gt;&amp;gt; t;
+        cin &amp;gt;&amp;gt; s;
+        nextCal(t, next);
+        kmpCal(s, t, next);
+    }
+
+    return 0;
+}
+
+void nextCal(string s, int *next)
+{
+    next&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; = 0;
+    int j = 0;
+    int sLength = s.length();
+    for (int i = 1; i &lt;span class="nt"&gt;&amp;lt; sLength&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt; &lt;span class="na"&gt;i&lt;/span&gt;&lt;span class="err"&gt;++)&lt;/span&gt;
+    &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;while&lt;/span&gt; &lt;span class="err"&gt;((&lt;/span&gt;&lt;span class="na"&gt;j&lt;/span&gt; &lt;span class="nt"&gt;&amp;gt;&lt;/span&gt; 0) &lt;span class="err"&gt;&amp;amp;&amp;amp;&lt;/span&gt; (s&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; != s&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;))
+            j = next&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;;
+        if (s&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; == s&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;)
+        {
+            j = j + 1;
+        }
+        next&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; = j;
+    }
+}
+
+void kmpCal(string s, string t, int next&lt;span class="cp"&gt;[]&lt;/span&gt;)
+{
+    int i = 0;
+    int j = 0;
+    int sLength = s.length();
+    int tLength = t.length();
+    for (i = 0; i &lt;span class="nt"&gt;&amp;lt; sLength&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt; &lt;span class="na"&gt;i&lt;/span&gt;&lt;span class="err"&gt;++)&lt;/span&gt;
+    &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;while&lt;/span&gt; &lt;span class="err"&gt;((&lt;/span&gt;&lt;span class="na"&gt;j&lt;/span&gt; &lt;span class="nt"&gt;&amp;gt;&lt;/span&gt; 0) &lt;span class="err"&gt;&amp;amp;&amp;amp;&lt;/span&gt; (t&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; != s&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;))
+            j = next&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;;
+        if (t&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; == s&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;)
+            j = j + 1;
+        if (j == tLength)
+        {
+            theNumofPattern++;
+            //cout &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt; i&lt;/span&gt; &lt;span class="na"&gt;-&lt;/span&gt; &lt;span class="na"&gt;tLength&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;endl&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+            &lt;span class="na"&gt;j =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;next&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="na"&gt;cout&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;theNumofPattern&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="na"&gt;endl&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+    &lt;span class="na"&gt;theNumofPattern =&lt;/span&gt;&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;0;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;程序简短了许多，测试成功后，提交代码。&lt;/p&gt;
+&lt;p&gt;AC了~&lt;/p&gt;
+&lt;p&gt;耗时241ms，果然要比自己瞎编的要强得多啊。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">LiXiang</dc:creator><pubDate>Fri, 25 Jul 2014 00:00:00 +0800</pubDate><guid>tag:lxalxy.github.io,2014-07-25:kmpsuan-fa-chu-jie-hong.html</guid><category>C\C++</category><category>算法</category></item><item><title>Hello World！</title><link>http://lxalxy.github.io/hello-world.html</link><description>&lt;hr /&gt;
 &lt;p&gt;这是我的第一篇博客，采用了Github+Pelican方案。主要参考了下文的方法。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html"&gt;博客诞生记：基于GitHub+Pelican创建博客的整个过程&lt;/a&gt;&lt;/p&gt;
