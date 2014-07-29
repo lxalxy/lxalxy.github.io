@@ -130,103 +130,197 @@
 </blockquote>
 <p>具体原理就先不写了，有时间再撸吧。</p>
 <p>这是我的第一版程序</p>
-<div class="highlight"><pre><span class="vi">#include</span> <span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
-<span class="vi">#include</span> <span class="s2">&quot;iostream&quot;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include &lt;string&gt;</span>
+<span class="cp">#include &quot;iostream&quot;</span>
 
-<span class="nx">using</span> <span class="nx">namespace</span> <span class="nx">std</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-<span class="nx">int</span> <span class="n">theNumofPattern</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">theNumofPattern</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-<span class="bp">void</span> <span class="nx">nextCal</span><span class="p">(</span><span class="kt">string</span> <span class="nb">s</span><span class="p">,</span> <span class="nx">int</span> <span class="nb">next</span><span class="err">[</span><span class="cp">]</span>);
-int kmpCal(string s, string t);
+<span class="kt">void</span> <span class="nf">nextCal</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">next</span><span class="p">[]);</span>
+<span class="kt">int</span> <span class="nf">kmpCal</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">string</span> <span class="n">t</span><span class="p">);</span>
 
-int main( )
-{
-    int theNumofTest = 0;
-    string s;
-    string t;
-    cin &gt;&gt; theNumofTest;
-    while (theNumofTest--)
-    {
-        cin &gt;&gt; t;
-        cin &gt;&gt; s;
-        int sLength = s.length();
-        int tLength = t.length();
-        int theLocation = 0;
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">theNumofTest</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">t</span><span class="p">;</span>
+    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">theNumofTest</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">theNumofTest</span><span class="o">--</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">t</span><span class="p">;</span>
+        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">s</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">sLength</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">tLength</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">theLocation</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-        while (theLocation <span class="nt">&lt; sLength</span><span class="err">)</span>
-        <span class="err">{</span>
-            <span class="na">if</span> <span class="err">(</span><span class="na">theLocation</span> <span class="err">!=</span> <span class="na">0</span><span class="err">)</span>
-            <span class="err">{</span>
-                <span class="na">s =</span><span class="err"> </span><span class="s">s.substr(theLocation</span> <span class="na">-</span> <span class="na">tLength</span> <span class="err">+</span> <span class="na">1</span><span class="err">,</span> <span class="na">sLength</span><span class="err">);</span>
-            <span class="err">}</span>
-            <span class="na">theLocation =</span><span class="err"> </span><span class="s">kmpCal(s,</span> <span class="na">t</span><span class="err">);</span>
-            <span class="na">if</span> <span class="err">(</span><span class="na">theLocation =</span><span class="s">=</span> <span class="na">s</span><span class="err">.</span><span class="na">length</span><span class="err">())</span>
-                <span class="na">break</span><span class="err">;</span>
-        <span class="err">}</span>
-        <span class="na">cout</span> <span class="err">&lt;&lt;</span> <span class="na">theNumofPattern</span> <span class="err">&lt;&lt;</span> <span class="na">endl</span><span class="err">;</span>
-        <span class="na">theNumofPattern =</span><span class="err"> </span><span class="s">0;</span>
-    <span class="err">}</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">theLocation</span> <span class="o">&lt;</span> <span class="n">sLength</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">theLocation</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">theLocation</span> <span class="o">-</span> <span class="n">tLength</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sLength</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">theLocation</span> <span class="o">=</span> <span class="n">kmpCal</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">theLocation</span> <span class="o">==</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">())</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">theNumofPattern</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="n">theNumofPattern</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    <span class="na">return</span> <span class="na">0</span><span class="err">;</span>
-<span class="err">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 
 
-<span class="na">int</span> <span class="na">kmpCal</span><span class="err">(</span><span class="na">string</span> <span class="na">s</span><span class="err">,</span> <span class="na">string</span> <span class="na">t</span><span class="err">)</span>
-<span class="err">{</span>
-    <span class="na">int</span> <span class="na">sLength =</span><span class="err"> </span><span class="s">s.length();</span>
-    <span class="na">int</span> <span class="na">tLength =</span><span class="err"> </span><span class="s">t.length();</span>
-    <span class="na">int</span> <span class="na">next</span><span class="cp">[</span><span class="mi">10001</span><span class="cp">]</span><span class="err">;</span>
-    <span class="na">nextCal</span><span class="err">(</span><span class="na">t</span><span class="err">,</span> <span class="na">next</span><span class="err">);</span>
-    <span class="na">int</span> <span class="na">i =</span><span class="err"> </span><span class="s">0;</span>
-    <span class="na">int</span> <span class="na">j =</span><span class="err"> </span><span class="s">0;</span>
-    <span class="na">while</span> <span class="err">((</span><span class="na">i</span> <span class="err">&lt;</span> <span class="na">sLength</span><span class="err">)</span> <span class="err">&amp;&amp;</span> <span class="err">(</span><span class="na">j</span> <span class="err">&lt;</span> <span class="na">tLength</span><span class="err">))</span>
-    <span class="err">{</span>
-        <span class="na">if</span> <span class="err">(</span><span class="na">s</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span> <span class="err">!=</span> <span class="na">t</span><span class="cp">[</span><span class="nx">j</span><span class="cp">]</span><span class="err">)</span>
-        <span class="err">{</span>
-            <span class="na">i =</span><span class="err"> </span><span class="s">i</span> <span class="na">-</span> <span class="na">next</span><span class="cp">[</span><span class="nx">j</span><span class="cp">]</span><span class="err">;</span>
-            <span class="na">j =</span><span class="err"> </span><span class="s">0;</span>
-        <span class="err">}</span>
-        <span class="na">else</span>
-        <span class="err">{</span>
-            <span class="na">i</span><span class="err">++;</span>
-            <span class="na">j</span><span class="err">++;</span>
-        <span class="err">}</span>
-    <span class="err">}</span>
-    <span class="na">if</span> <span class="err">(</span><span class="na">j =</span><span class="s">=</span> <span class="na">tLength</span><span class="err">)</span>
-    <span class="err">{</span>
-    <span class="err">//</span>  <span class="na">printf</span><span class="err">(&quot;%</span><span class="na">d</span><span class="err">\</span><span class="na">n</span><span class="err">&quot;,</span> <span class="na">i-1</span><span class="err">);</span>
-        <span class="na">theNumofPattern</span><span class="err">++;</span>
-    <span class="err">}</span>
-    <span class="na">else</span>
-    <span class="err">{</span>
-    <span class="err">//</span>  <span class="na">printf</span><span class="err">(&quot;%</span><span class="na">s</span><span class="err">\</span><span class="na">n</span><span class="err">&quot;,</span> <span class="err">&quot;</span><span class="na">none</span><span class="err">&quot;);</span> 
-    <span class="err">}</span>
-    <span class="na">return</span> <span class="na">i</span><span class="err">;</span>
-<span class="err">}</span>
+<span class="kt">int</span> <span class="nf">kmpCal</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">string</span> <span class="n">t</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sLength</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">tLength</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">next</span><span class="p">[</span><span class="mi">10001</span><span class="p">];</span>
+    <span class="n">nextCal</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">next</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">((</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">sLength</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">tLength</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="p">{</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">next</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="n">tLength</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="c1">//  printf(&quot;%d\n&quot;, i-1);</span>
+        <span class="n">theNumofPattern</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+    <span class="c1">//  printf(&quot;%s\n&quot;, &quot;none&quot;); </span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="na">void</span> <span class="na">nextCal</span><span class="err">(</span><span class="na">string</span> <span class="na">s</span><span class="err">,</span> <span class="na">int</span> <span class="na">next</span><span class="cp">[]</span><span class="err">)</span>
-<span class="err">{</span>
-    <span class="na">int</span> <span class="na">len =</span><span class="err"> </span><span class="s">s.length();</span>
-    <span class="na">next</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">0;</span>
-    <span class="na">for</span> <span class="err">(</span><span class="na">int</span> <span class="na">i =</span><span class="err"> </span><span class="s">1;</span> <span class="na">i</span> <span class="err">&lt;</span> <span class="na">len</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span>
-    <span class="err">{</span>
-        <span class="na">int</span> <span class="na">k =</span><span class="err"> </span><span class="s">next</span><span class="cp">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span><span class="s">;</span>
-        <span class="na">while</span> <span class="err">(</span><span class="na">s</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span> <span class="err">!=</span> <span class="na">s</span><span class="cp">[</span><span class="nx">k</span><span class="cp">]</span> <span class="err">&amp;&amp;</span> <span class="na">k</span> <span class="err">!=</span> <span class="na">0</span><span class="err">)</span>
-            <span class="na">k =</span><span class="err"> </span><span class="s">next</span><span class="cp">[</span><span class="nx">k</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span><span class="s">;</span>
-        <span class="na">if</span> <span class="err">(</span><span class="na">s</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span><span class="na"> =</span><span class="s">=</span> <span class="na">s</span><span class="cp">[</span><span class="nx">k</span><span class="cp">]</span><span class="err">)</span>
-            <span class="na">next</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">k</span> <span class="err">+</span> <span class="na">1</span><span class="err">;</span>
-        <span class="na">else</span>
-            <span class="na">next</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">0;</span> 
-    <span class="err">}</span>
-    <span class="na">for</span> <span class="err">(</span><span class="na">int</span> <span class="na">i =</span><span class="err"> </span><span class="s">0;</span> <span class="na">i</span> <span class="err">&lt;</span> <span class="na">len</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span>
-    <span class="err">{</span>
-        <span class="na">next</span><span class="cp">[</span><span class="nx">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="nx">i</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">next</span><span class="cp">[</span><span class="nx">len</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">-</span> <span class="nx">i</span><span class="cp">]</span><span class="s">;</span>
-    <span class="err">}</span>
-    <span class="na">next</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="na"> =</span><span class="err"> </span><span class="s">-1;</span>
-<span class="err">}</span>
+<span class="kt">void</span> <span class="nf">nextCal</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">next</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+    <span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">next</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">k</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">next</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">next</span><span class="p">[</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">next</span><span class="p">[</span><span class="n">len</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>在电脑上测试样例通过，于是马上提交代码，结果却Time Limit Exceeded。</p>
 <p>看来自己编写的确实算法复杂度太差了。回头看了看，循环太多，但是却又无从下手修改。</p>
@@ -235,75 +329,141 @@ int main( )
 <p><a href="http://www.matrix67.com/blog/archives/115">KMP算法详解</a></p>
 </blockquote>
 <p>第二版程序如下：</p>
-<div class="highlight"><pre><span class="vi">#include</span> <span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
-<span class="vi">#include</span> <span class="s2">&quot;iostream&quot;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include &lt;string&gt;</span>
+<span class="cp">#include &quot;iostream&quot;</span>
 
-<span class="nx">using</span> <span class="nx">namespace</span> <span class="nx">std</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-<span class="nx">int</span> <span class="n">theNumofPattern</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">theNumofPattern</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-<span class="bp">void</span> <span class="nx">nextCal</span><span class="p">(</span><span class="kt">string</span> <span class="nb">s</span><span class="p">,</span> <span class="nx">int</span> <span class="o">*</span><span class="nb">next</span><span class="p">);</span>
-<span class="bp">void</span> <span class="nx">kmpCal</span><span class="p">(</span><span class="kt">string</span> <span class="nb">s</span><span class="p">,</span> <span class="kt">string</span> <span class="nb">t</span><span class="p">,</span> <span class="nx">int</span> <span class="nb">next</span><span class="err">[</span><span class="cp">]</span>);
+<span class="kt">void</span> <span class="nf">nextCal</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">next</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">kmpCal</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">string</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">next</span><span class="p">[]);</span>
 
-int main( )
-{
-    int theNumofTest = 0;
-    string s;
-    string t;
-    int next<span class="cp">[</span><span class="mi">10001</span><span class="cp">]</span>;
-    cin &gt;&gt; theNumofTest;
-    while (theNumofTest--)
-    {
-        cin &gt;&gt; t;
-        cin &gt;&gt; s;
-        nextCal(t, next);
-        kmpCal(s, t, next);
-    }
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">theNumofTest</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">t</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">next</span><span class="p">[</span><span class="mi">10001</span><span class="p">];</span>
+    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">theNumofTest</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">theNumofTest</span><span class="o">--</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">t</span><span class="p">;</span>
+        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">s</span><span class="p">;</span>
+        <span class="n">nextCal</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">next</span><span class="p">);</span>
+        <span class="n">kmpCal</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">next</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    return 0;
-}
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 
-void nextCal(string s, int *next)
-{
-    next<span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> = 0;
-    int j = 0;
-    int sLength = s.length();
-    for (int i = 1; i <span class="nt">&lt; sLength</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span>
-    <span class="err">{</span>
-        <span class="na">while</span> <span class="err">((</span><span class="na">j</span> <span class="nt">&gt;</span> 0) <span class="err">&amp;&amp;</span> (s<span class="cp">[</span><span class="nx">j</span><span class="cp">]</span> != s<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span>))
-            j = next<span class="cp">[</span><span class="nx">j</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span>;
-        if (s<span class="cp">[</span><span class="nx">j</span><span class="cp">]</span> == s<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span>)
-        {
-            j = j + 1;
-        }
-        next<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span> = j;
-    }
-}
+<span class="kt">void</span> <span class="nf">nextCal</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">next</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sLength</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sLength</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">while</span> <span class="p">((</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">next</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="p">{</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-void kmpCal(string s, string t, int next<span class="cp">[]</span>)
-{
-    int i = 0;
-    int j = 0;
-    int sLength = s.length();
-    int tLength = t.length();
-    for (i = 0; i <span class="nt">&lt; sLength</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span>
-    <span class="err">{</span>
-        <span class="na">while</span> <span class="err">((</span><span class="na">j</span> <span class="nt">&gt;</span> 0) <span class="err">&amp;&amp;</span> (t<span class="cp">[</span><span class="nx">j</span><span class="cp">]</span> != s<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span>))
-            j = next<span class="cp">[</span><span class="nx">j</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span>;
-        if (t<span class="cp">[</span><span class="nx">j</span><span class="cp">]</span> == s<span class="cp">[</span><span class="nx">i</span><span class="cp">]</span>)
-            j = j + 1;
-        if (j == tLength)
-        {
-            theNumofPattern++;
-            //cout <span class="err">&lt;</span><span class="nt">&lt; i</span> <span class="na">-</span> <span class="na">tLength</span> <span class="err">&lt;&lt;</span> <span class="na">endl</span><span class="err">;</span>
-            <span class="na">j =</span><span class="err"> </span><span class="s">next</span><span class="cp">[</span><span class="nx">j</span> <span class="o">-</span> <span class="mi">1</span><span class="cp">]</span><span class="s">;</span>
-        <span class="err">}</span>
-    <span class="err">}</span>
-    <span class="na">cout</span> <span class="err">&lt;&lt;</span> <span class="na">theNumofPattern</span> <span class="err">&lt;&lt;</span> <span class="na">endl</span><span class="err">;</span>
-    <span class="na">theNumofPattern =</span><span class="err"> </span><span class="s">0;</span>
-<span class="err">}</span>
+<span class="kt">void</span> <span class="nf">kmpCal</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">string</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">next</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sLength</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">tLength</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sLength</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">while</span> <span class="p">((</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">next</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="n">tLength</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">theNumofPattern</span><span class="o">++</span><span class="p">;</span>
+            <span class="c1">//cout &lt;&lt; i - tLength &lt;&lt; endl;</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">next</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">theNumofPattern</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">theNumofPattern</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>程序简短了许多，测试成功后，提交代码。</p>
 <p>AC了~</p>
@@ -353,8 +513,8 @@ void kmpCal(string s, string t, int next<span class="cp">[]</span>)
 
 <li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
 <li class="tag-4">
-    <a href="http://lxalxy.github.io/tag/suan-fa.html">
-        <i class="icon-tag icon-large"></i>算法
+    <a href="http://lxalxy.github.io/tag/cc.html">
+        <i class="icon-tag icon-large"></i>C\C++
     </a>
 </li>
 <li class="tag-4">
@@ -363,13 +523,13 @@ void kmpCal(string s, string t, int next<span class="cp">[]</span>)
     </a>
 </li>
 <li class="tag-4">
-    <a href="http://lxalxy.github.io/tag/cc.html">
-        <i class="icon-tag icon-large"></i>C\C++
+    <a href="http://lxalxy.github.io/tag/python.html">
+        <i class="icon-tag icon-large"></i>Python
     </a>
 </li>
 <li class="tag-4">
-    <a href="http://lxalxy.github.io/tag/python.html">
-        <i class="icon-tag icon-large"></i>Python
+    <a href="http://lxalxy.github.io/tag/suan-fa.html">
+        <i class="icon-tag icon-large"></i>算法
     </a>
 </li>
 
